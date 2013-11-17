@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 
-import os
 import argparse
+import os
+import sys
 
 
 def ParseLog(FileName):
@@ -14,20 +15,28 @@ def ParseLog(FileName):
     SrcPorts = set()
     DstPorts = set()
 
-    with open(FileName) as FN:
-        for line in FN:
-            SrcIPs.add(line[line.find('SRC'):line.find('DST')][4:-1])
-            DstIPs.add(line[line.find('DST'):line.find('LEN')][4:-1])
+    if os.path.isfile(FileName) and os.access(FileName, os.R_OK):
 
-            if 'SPT' in line:
-                SrcPorts.add(line[line.find('SPT'):line.find('DPT')][4:-1])
-            if 'DPT' in line:
-                line = line[line.find('DPT'):]
-                if 'LEN' in line:
-                    DstPorts.add(line[line.find('DPT'):line.find('LEN')][4:-1])
-                elif 'WINDOW' in line:
-                    DstPorts.add(line[line.find('DPT'):line.find('WINDOW')]
-                                 [4:-1])
+        with open(FileName) as FN:
+            for line in FN:
+                SrcIPs.add(line[line.find('SRC'):line.find('DST')][4:-1])
+                DstIPs.add(line[line.find('DST'):line.find('LEN')][4:-1])
+
+                if 'SPT' in line:
+                    SrcPorts.add(line[line.find('SPT'):line.find('DPT')][4:-1])
+
+                if 'DPT' in line:
+                    line = line[line.find('DPT'):]
+                    if 'LEN' in line:
+                        DstPorts.add(line[line.find('DPT'):line.find('LEN')]
+                                     [4:-1])
+                    elif 'WINDOW' in line:
+                        DstPorts.add(line[line.find('DPT'):line.find('WINDOW')]
+                                     [4:-1])
+
+    else:
+        print "File '%s' is not a file or cannot be read." % FileName
+        sys.exit(14)
 
     ShowOut(SrcIPs, DstIPs, SrcPorts, DstPorts)
 
