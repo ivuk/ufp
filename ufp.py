@@ -7,6 +7,9 @@ import sys
 
 
 def CheckFile(FileName):
+    """
+    Check if the file that we should parse is a file and if we can read it
+    """
     if not os.path.isfile(FileName) and not os.access(FileName, os.R_OK):
         print "File '%s' is not a file or cannot be read." % FileName
         sys.exit(14)
@@ -37,9 +40,9 @@ def PairSrcIPsAndDstPorts(FileName):
                     CurPortList.append(DstPort)
                     SrcIPsAndDstPorts[SrcIP] = CurPortList
 
+    print "Source IP\tDestination port(s)"
     for SrcIP in SrcIPsAndDstPorts.keys():
-        print "The address %s tried to connect to port(s): %s" % \
-              (SrcIP, ', '.join(SrcIPsAndDstPorts[SrcIP]))
+        print "%s\t%s" % (SrcIP, ', '.join(SrcIPsAndDstPorts[SrcIP]))
 
 
 def ParseLog(FileName):
