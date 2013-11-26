@@ -94,17 +94,17 @@ def DoIt():
     parser.add_argument('-f', '--file', dest='FileName', help='Specify which \
                         ufw log file to parse', default='/var/log/ufw.log',
                         type=str, action='store')
-    parser.add_argument('-m', '--match', dest='MatchSourceAndPort',
+    parser.add_argument('-s', '--source', dest='MatchSourceAndPort',
                         action='store_true', help='Show which IP tried to \
                                 connect to which port')
-    parser.add_argument('-s', '--short', dest='ParseLog', action='store_true',
+    parser.add_argument('-b', '--brief', dest='ParseLogBrief', action='store_true',
                         help='Show a short summary of data in the log file')
 
     args = parser.parse_args()
 
     if args.FileName:
         CheckFile(args.FileName)
-    if args.ParseLog:
+    if args.ParseLogBrief:
         CheckFile(args.FileName)
         ParseLog(args.FileName)
     if args.MatchSourceAndPort:
