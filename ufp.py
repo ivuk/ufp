@@ -45,6 +45,31 @@ def PairSrcIPsAndDstPorts(FileName):
         print "%s\t%s" % (SrcIP, ', '.join(SrcIPsAndDstPorts[SrcIP]))
 
 
+def PairDstIPsAndSrcIPs(FileName):
+    """
+    Pair destination and source IP addresses
+    """
+    DstIPsAndSrcIPs = dict()
+
+    with open(FileName) as FN:
+        for line in FN:
+            DstIP = line[line.find('DST'):line.find('LEN')][4:-1]
+
+            if DstIP not in DstIPsAndSrcIPs.keys():
+                DstIPsAndSrcIPs[DstIP] = []
+
+            SrcIP = line[line.find('SRC'):line.find('DST')][4:-1]
+
+            if SrcIP not in DstIPsAndSrcIPs[DstIP]:
+                    CurSourceIPList = list(DstIPsAndSrcIPs[DstIP])
+                    CurSourceIPList.append(SrcIP)
+                    DstIPsAndSrcIPs[DstIP] = CurSourceIPList
+
+    print "Destination IP/MAC\tSource IP/MAC"
+    for DstIP in DstIPsAndSrcIPs.keys():
+        print "%s\t\t%s" % (DstIP, ', '.join(DstIPsAndSrcIPs[DstIP]))
+
+
 def ParseLog(FileName):
     """
     Function for parsing the log file
@@ -97,8 +122,12 @@ def DoIt():
     parser.add_argument('-s', '--source', dest='MatchSourceAndPort',
                         action='store_true', help='Show which IP tried to \
                                 connect to which port')
-    parser.add_argument('-b', '--brief', dest='ParseLogBrief', action='store_true',
-                        help='Show a short summary of data in the log file')
+    parser.add_argument('-b', '--brief', dest='ParseLogBrief',
+                        action='store_true', help='Show a short summary of \
+                        data in the log file')
+    parser.add_argument('-d', '--dest', dest='MatchDestIPAndSrcIP',
+                        action='store_true', help='Show which source IP \
+                        tried to connect to which destination IP')
 
     args = parser.parse_args()
 
@@ -110,6 +139,9 @@ def DoIt():
     if args.MatchSourceAndPort:
         CheckFile(args.FileName)
         PairSrcIPsAndDstPorts(args.FileName)
+    if args.MatchDestIPAndSrcIP:
+        CheckFile(args.FileName)
+        PairDstIPsAndSrcIPs(args.FileName)
 
 
 if __name__ == "__main__":
