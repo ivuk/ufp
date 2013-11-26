@@ -40,7 +40,7 @@ def PairSrcIPsAndDstPorts(FileName):
                     CurPortList.append(DstPort)
                     SrcIPsAndDstPorts[SrcIP] = CurPortList
 
-    print "Source IP\tDestination port(s)"
+    print "Source IP/MAC\tDestination port(s)"
     for SrcIP in SrcIPsAndDstPorts.keys():
         print "%s\t%s" % (SrcIP, ', '.join(SrcIPsAndDstPorts[SrcIP]))
 
@@ -78,8 +78,8 @@ def ShowOut(SrcIPs, DstIPs, SrcPorts, DstPorts):
     """
     Function for printing out the gathered info
     """
-    print 'Source IP addresses: ' + ', '.join(SrcIPs)
-    print 'Destination IP addresses: ' + ', '.join(DstIPs)
+    print 'Source IP/MAC addresses: ' + ', '.join(SrcIPs)
+    print 'Destination IP/MAC addresses: ' + ', '.join(DstIPs)
     print 'Source ports: ' + ', '.join(SrcPorts)
     print 'Destination ports: ' + ', '.join(DstPorts)
 
