@@ -131,6 +131,10 @@ def DoIt():
 
     args = parser.parse_args()
 
+    if not (args.ParseLogBrief or args.MatchSourceAndPort or
+            args.MatchDestIPAndSrcIP):
+        parser.print_help()
+
     if args.FileName:
         CheckFile(args.FileName)
     if args.ParseLogBrief:
