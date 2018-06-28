@@ -2,7 +2,7 @@ ufp
 ===
 
 The Uncomplicated Firewall (ufw) log parser.
-
+```
 Usage: ufp.py [-h] [-p] [-s] [-src2dpt] [-dst2dpt] [-src2dst] [-ct] [-r] [-c]
               [-a] [-b] [-i] [-o] [-spt FILTER_SOURCE_PORT]
               [-dpt FILTER_DESTINATION_PORT] [-src FILTER_SOURCE_IP]
@@ -60,10 +60,10 @@ optional arguments:
   -dst FILTER_DESTINATION_IP, --filter-destination-ip FILTER_DESTINATION_IP
                         Only display entries which have a destination ip
                         matching the value provided.
-                        
+                   
 If no formatting arguments are provided, a table is printed along with
 the count of matching entries (same as -p -ct).
-
+```
 
 Examples
 
