@@ -2,6 +2,8 @@ import datetime
 import re
 import socket
 
+socket.setdefaulttimeout(1)
+
 
 class ParsedLine():
     ACTION_BLOCK = 0

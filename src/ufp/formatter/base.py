@@ -5,6 +5,7 @@ class BaseFormatter():
     def __init__(self, entries, options):
         self.entries = entries
         self.options = options
+        self.hostname_cache = {}
 
     def get_action_repr(self, parsed_line):
         if self.options.colorize:

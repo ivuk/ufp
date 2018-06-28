@@ -123,10 +123,6 @@ class Cli():
 
         self.formatters = []
 
-        if self.args.reverse_dns:
-            import socket
-            socket.setdefaulttimeout(1)
-
         if self.args.print:
             formatter = BasicSrcDstActionFormatter(entries, self.args)
             self.formatters.append(formatter)
