@@ -128,17 +128,17 @@ class Cli():
             self.formatters.append(formatter)
 
         if self.args.source_to_dst_port:
-            from formatter.summary import SrcToDstPortFormatter
+            from ufp.formatter.summary import SrcToDstPortFormatter
             formatter = SrcToDstPortFormatter(entries, self.args)
             self.formatters.append(formatter)
 
         if self.args.destination_to_dst_port:
-            from formatter.summary import DstToDstPortFormatter
+            from ufp.formatter.summary import DstToDstPortFormatter
             formatter = DstToDstPortFormatter(entries, self.args)
             self.formatters.append(formatter)
 
         if self.args.source_to_dst:
-            from formatter.summary import SrcToDstIPFormatter
+            from ufp.formatter.summary import SrcToDstIPFormatter
             formatter = SrcToDstIPFormatter(entries, self.args)
             self.formatters.append(formatter)
 
@@ -147,7 +147,7 @@ class Cli():
             self.formatters.append(formatter)
 
         if self.args.summary:
-            from formatter.summary import SummaryFormatter
+            from ufp.formatter.summary import SummaryFormatter
             formatter = SummaryFormatter(entries, self.args)
             self.formatters.append(formatter)
 
