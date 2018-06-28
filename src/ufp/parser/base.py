@@ -2,11 +2,14 @@ import datetime
 import re
 import socket
 
+
 class ParsedLine():
     ACTION_BLOCK = 0
     ACTION_ALLOW = 1
 
-    _ip_protocol_table = {num:name[8:] for name,num in vars(socket).items() if name.startswith("IPPROTO")}
+    _ip_protocol_table = {num: name[8:] for name, num in
+                          vars(socket).items() if
+                          name.startswith("IPPROTO")}
 
     def __init__(self, data):
         self.data = data
@@ -70,10 +73,13 @@ class ParsedLine():
         items = ("{}={!r}".format(k, self.__dict__[k]) for k in keys)
         return "{}({})".format(type(self).__name__, ", ".join(items))
 
+
 class BaseParser():
     # Aug  6 06:25:20 myhost kernel: [105600.181847] [UFW ALLOW] ...
-    HEADER_PATTERN = r'([A-Za-z]{3}\s+\d{1,2} \d{2}:\d{2}:\d{2}) ([a-zA-Z0-9-]+) kernel: \[.*\] \[UFW ([A-Z]+)\]'
-    # IN= OUT=eno1 SRC=123.45.67.89 DST=123.45.67.88 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=24678 DF PROTO=TCP SPT=37314 DPT=11211 WINDOW=29200 RES=0x00 SYN URGP=0
+    HEADER_PATTERN = r'([A-Za-z]{3}\s+\d{1,2} \d{2}:\d{2}:\d{2}) ([a-zA-Z0-9-]+) kernel: \[.*\] \[UFW ([A-Z]+)\]'  # nopep8
+    # IN= OUT=eno1 SRC=123.45.67.89 DST=123.45.67.88 LEN=60 TOS=0x00
+    # PREC=0x00 TTL=64 ID=24678 DF PROTO=TCP SPT=37314 DPT=11211
+    # WINDOW=29200 RES=0x00 SYN URGP=0
     PARAM_PATTERN = r'(\w+)[=]?([\w.:]*)'
 
     def __init__(self):
@@ -84,7 +90,8 @@ class BaseParser():
         # parse header
         header_groups = self.header_regex.findall(line)
         # convert date to python object
-        date = datetime.datetime.strptime(header_groups[0][0], '%b %d %H:%M:%S')
+        date = datetime.datetime.strptime(header_groups[0][0],
+                                          '%b %d %H:%M:%S')
 
         # was the connection attempt ALLOWed or BLOCKed?
         action = header_groups[0][2]
@@ -100,6 +107,7 @@ class BaseParser():
         parsed_line.set_action(action)
 
         return parsed_line
+
 
 class ParserFilter():
     """
@@ -125,16 +133,17 @@ class ParserFilter():
         if self.options.filter_outbound_only and parsed_line.inbound():
             return False
         if self.options.filter_source_port and \
-            parsed_line.spt != int(self.options.filter_source_port):
+                parsed_line.spt != int(self.options.filter_source_port):
             return False
         if self.options.filter_destination_port and \
-            parsed_line.dpt != int(self.options.filter_destination_port):
+                parsed_line.dpt != \
+                int(self.options.filter_destination_port):
             return False
         if self.options.filter_source_ip and \
-            parsed_line.src != self.options.filter_source_ip:
+                parsed_line.src != self.options.filter_source_ip:
             return False
         if self.options.filter_destination_ip and \
-            parsed_line.dst != self.options.filter_destination_ip:
+                parsed_line.dst != self.options.filter_destination_ip:
             return False
 
         return True

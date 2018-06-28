@@ -1,5 +1,6 @@
 from .base import BaseFormatter
 
+
 class CountFormatter(BaseFormatter):
     """
     Formatter which displays a count of the entries matching filters

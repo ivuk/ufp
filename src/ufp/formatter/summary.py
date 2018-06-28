@@ -1,5 +1,6 @@
 from .base import BaseFormatter
 
+
 class SummaryFormatter(BaseFormatter):
     """
     Formatter which displays source and destination pairs.
@@ -12,23 +13,23 @@ class SummaryFormatter(BaseFormatter):
 
         self.src_hosts = {}
         self.dst_hosts = {}
-        
+
         self.start_datetime = None
         self.end_datetime = None
 
         for line in self.entries:
             if self.start_datetime is None:
                 self.start_datetime = line.date
-                
+
             self.end_datetime = line.date
-            
+
             self.src_ips.add(line.src)
             self.dst_ips.add(line.dst)
 
             if self.options.reverse_dns:
-                if not line.src in self.src_hosts:
+                if line.src not in self.src_hosts:
                     self.src_hosts[line.src] = line.ip_to_hostname(line.src)
-                if not line.dst in self.dst_hosts:
+                if line.dst not in self.dst_hosts:
                     self.dst_hosts[line.dst] = line.ip_to_hostname(line.dst)
 
             spt = line.spt
@@ -42,14 +43,24 @@ class SummaryFormatter(BaseFormatter):
     def format(self):
         self.aggregate()
         if self.start_datetime and self.end_datetime:
-            print('Log start/end: ' + self.start_datetime.strftime('%c') + '/' + self.end_datetime.strftime('%c') + '\n\n')
-        print('Source IP/MAC addresses: ' + ', '.join(sorted(self.src_ips)) + '\n\n')
-        print('Destination IP/MAC addresses: ' + ', '.join(sorted(self.dst_ips)) + '\n\n')
-        print('Source ports: ' + ', '.join([str(value) for value in sorted(self.src_ports)]) + '\n\n')
-        print('Destination ports: ' + ', '.join([str(value) for value in sorted(self.dst_ports)]) + '\n\n')
+            print('Log start/end: ' + self.start_datetime.strftime('%c')
+                  + '/' + self.end_datetime.strftime('%c') + '\n\n')
+        print('Source IP/MAC addresses: ' + ', '.join(sorted(self.src_ips))
+              + '\n\n')
+        print('Destination IP/MAC addresses: '
+              + ', '.join(sorted(self.dst_ips))
+              + '\n\n')
+        print('Source ports: ' + ', '.join([str(value) for value in
+              sorted(self.src_ports)]) + '\n\n')
+        print('Destination ports: ' + ', '.join([str(value) for value
+              in sorted(self.dst_ports)]) + '\n\n')
         if self.options.reverse_dns:
-            print('Source Hostnames: ' + ', '.join(['[%s] %s' % (key, value) for (key, value) in self.src_hosts.items()]) + '\n\n')
-            print('Destination Hostnames: ' + ', '.join(['[%s] %s' % (key, value) for (key, value) in self.dst_hosts.items()]) + '\n\n')
+            print('Source Hostnames: ' + ', '.join(['[%s] %s' %
+                  (key, value) for (key, value) in
+                  self.src_hosts.items()]) + '\n\n')
+            print('Destination Hostnames: ' + ', '.join(['[%s] %s' %
+                  (key, value) for (key, value) in
+                  self.dst_hosts.items()]) + '\n\n')
 
 
 class SrcToDstPortFormatter(BaseFormatter):
@@ -73,7 +84,8 @@ class SrcToDstPortFormatter(BaseFormatter):
         self.aggregate()
         print("Source IP\tDestination port(s)\n")
         for src in sorted(self.dst_ports_by_src_ip.keys()):
-            print("%s\t%s" % (src, ', '.join([str(value) for value in sorted(self.dst_ports_by_src_ip[src])])))
+            print("%s\t%s" % (src, ', '.join([str(value) for value in
+                  sorted(self.dst_ports_by_src_ip[src])])))
 
 
 class DstToDstPortFormatter(BaseFormatter):
@@ -98,10 +110,13 @@ class DstToDstPortFormatter(BaseFormatter):
         print("Destination IP\tDestination port(s)\n")
         for dst in sorted(self.dst_ports_by_dst_ip.keys()):
             if self.options.reverse_dns:
-                print("{dsthost:75} [{dstip:39}] {dstports}" \
-                .format(dsthost=self.hosts[dst], dstip=dst, dstports=', '.join(self.dst_ports_by_dst_ip[dst])))
+                print("{dsthost:75} [{dstip:39}] {dstports}"
+                      .format(dsthost=self.hosts[dst], dstip=dst,
+                              dstports=', '.join(
+                              self.dst_ports_by_dst_ip[dst])))
             else:
-                print("%s\t\t%s" % (dst, ', '.join([str(value) for value in sorted(self.dst_ports_by_dst_ip[dst])])))
+                print("%s\t\t%s" % (dst, ', '.join([str(value) for
+                      value in sorted(self.dst_ports_by_dst_ip[dst])])))
 
 
 class SrcToDstIPFormatter(BaseFormatter):
@@ -127,6 +142,9 @@ class SrcToDstIPFormatter(BaseFormatter):
         print("Destination IP\tSource IP")
         for dst in sorted(self.src_ips_by_dst_ip.keys()):
             if self.options.reverse_dns:
-                print("%s (%s)\t\t%s" % (dst, self.hosts[dst], ', '.join([str(value) for value in sorted(self.src_ips_by_dst_ip[dst])])))
+                print("%s (%s)\t\t%s" % (dst, self.hosts[dst],
+                      ', '.join([str(value) for value in
+                                sorted(self.src_ips_by_dst_ip[dst])])))
             else:
-                print("%s\t%s" % (dst, ', '.join([str(value) for value in sorted(self.src_ips_by_dst_ip[dst])])))
+                print("%s\t%s" % (dst, ', '.join([str(value) for value
+                      in sorted(self.src_ips_by_dst_ip[dst])])))

@@ -5,7 +5,7 @@ class BaseFormatter():
     def __init__(self, entries, options):
         self.entries = entries
         self.options = options
-        
+
     def get_action_repr(self, parsed_line):
         if self.options.colorize:
             allow = '\u2705'
@@ -13,13 +13,13 @@ class BaseFormatter():
         else:
             allow = 'ALLOW'
             block = 'BLOCK'
-        
+
         if parsed_line.allowed():
             action = allow
         else:
             action = block
-            
+
         return action
-        
+
     def format(self):
         raise NotImplemented
