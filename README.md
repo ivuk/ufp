@@ -65,9 +65,13 @@ If no formatting arguments are provided, a table is printed along with
 the count of matching entries (same as -p -ct).
 ```
 
-Examples
+# Examples
 
--Only show traffic with a source of 8.8.4.4: ./ufp.py -src 8.8.4.4 tests/fixtures/ufw.log
--Only show allowed traffic with a destination port of 443: ./ufp.py -a -dpt 443 tests/fixtures/ufw.log
--Only show traffic inbound to the logging host which was blocked: ./ufp.py -i -b tests/fixtures/ufw.log
--Only show traffic inbound to the logging host which was blocked. Enable reverse DNS lookup for entries.: ./ufp.py -i -b -r tests/fixtures/ufw.log
+- Only show traffic with a source of 8.8.4.4
+  - ./ufp.py -src 8.8.4.4 tests/fixtures/ufw.log
+- Only show allowed traffic with a destination port of 443
+  - ./ufp.py -a -dpt 443 tests/fixtures/ufw.log
+- Only show traffic inbound to the logging host which was blocked
+  - ./ufp.py -i -b tests/fixtures/ufw.log
+- Only show traffic inbound to the logging host which was blocked. Enable reverse DNS lookup for entries.
+  - ./ufp.py -i -b -r tests/fixtures/ufw.log
