@@ -69,13 +69,13 @@ the count of matching entries (same as -p -ct).
 ## Examples
 
 - Only show traffic with a source of 8.8.4.4
-  - ./ufp.py -src 8.8.4.4 tests/fixtures/ufw.log
+  - ./ufp.py -src 8.8.4.4
 - Only show allowed traffic with a destination port of 443
-  - ./ufp.py -a -dpt 443 tests/fixtures/ufw.log
+  - ./ufp.py -a -dpt 443
 - Only show traffic inbound to the logging host which was blocked
-  - ./ufp.py -i -b tests/fixtures/ufw.log
+  - ./ufp.py -i -b
 - Only show traffic outbound from the logging host which was blocked. Enable reverse DNS lookup for entries.
-  - ./ufp.py -i -b -r tests/fixtures/ufw.log
+  - ./ufp.py -i -b -r
   
   *Outbound entries will only appear if you have explicitly enabled that type of logging. For example: ufw allow out **log** to any proto tcp port 22*
   
