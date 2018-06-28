@@ -3,11 +3,11 @@ from .base import BaseParser
 
 class FileParser(BaseParser):
     """
-    A parser which accepts a filename and allows iteration to retrieve
-    ParsedLine instances.
+    A parser which accepts a file-like object and allows iteration to
+    retrieve ParsedLine instances.
     """
-    def __init__(self, filename):
-        self.file = open(filename, 'r')
+    def __init__(self, filelike):
+        self.file = filelike
         super().__init__()
 
     def __iter__(self):

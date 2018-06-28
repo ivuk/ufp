@@ -3,6 +3,7 @@ from ufp.formatter.count import CountFormatter
 from ufp.parser.base import ParserFilter
 from ufp.parser.file import FileParser
 import argparse
+from sys import stdin
 
 
 class Cli():
@@ -107,7 +108,15 @@ class Cli():
 
         self.args = arg_parser.parse_args()
 
-        log_parser = FileParser(self.args.filename)
+        filename = self.args.filename
+
+        if filename == '-':
+            # stdin
+            fileobj = stdin
+        else:
+            fileobj = open(filename, 'r')
+
+        log_parser = FileParser(fileobj)
         log_filter = ParserFilter(log_parser, self.args)
 
         entries = list(log_filter)
