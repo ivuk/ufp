@@ -88,7 +88,7 @@ the count of matching entries (same as -p -ct).
    - `ufp.parser.base.ParserFilter`
      - Enables filtering the collection of `ParsedLine` objects according to various criteria.
    - `ufp.parser.file.FileParser`
-     - Extends `ufp.parser.base.BaseParser` to provide iteration of lines in a log file.
+     - Extends `ufp.parser.base.BaseParser` to provide iteration of lines in a log file or file-like object.
  - `ufp.formatter`
    - `ufp.formatter.base.BaseFormatter`
      - Base formatter with display helpers. `format` method must be extended.
