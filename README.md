@@ -1,7 +1,8 @@
 ufp
 ===
 
-The [Uncomplicated Firewall](https://help.ubuntu.com/community/UFW "UFW help") (ufw) log parser.
+The [Uncomplicated Firewall](https://help.ubuntu.com/community/UFW "UFW help") (ufw) log parser. Includes Python package for parsing, filtering, and formatting logs, in addition to a CLI front-end.
+
 ```
 Usage: ufp.py [-h] [-p] [-s] [-src2dpt] [-dst2dpt] [-src2dst] [-ct] [-r] [-c]
               [-a] [-b] [-i] [-o] [-spt FILTER_SOURCE_PORT]
@@ -65,7 +66,7 @@ If no formatting arguments are provided, a table is printed along with
 the count of matching entries (same as -p -ct).
 ```
 
-# Examples
+## Examples
 
 - Only show traffic with a source of 8.8.4.4
   - ./ufp.py -src 8.8.4.4 tests/fixtures/ufw.log
@@ -77,3 +78,34 @@ the count of matching entries (same as -p -ct).
   - ./ufp.py -i -b -r tests/fixtures/ufw.log
   
   *Outbound entries will only appear if you have explicitly enabled that type of logging. For example: ufw allow out **log** to any proto tcp port 22*
+  
+## UFP Python Package
+ - `ufp.parser`
+   - `ufp.parser.base.BaseParser`
+     - Basic regex parser for UFW logs.
+   - `ufp.parser.base.ParsedLine`
+     - Representation of a fully parsed log line with access and data retrieval helpers.
+   - `ufp.parser.base.ParserFilter`
+     - Enables filtering the collection of `ParsedLine` objects according to various criteria.
+   - `ufp.parser.file.FileParser`
+     - Extends `ufp.parser.base.BaseParser` to provide iteration of lines in a log file.
+ - `ufp.formatter`
+   - `ufp.formatter.base.BaseFormatter`
+     - Base formatter with display helpers. `format` method must be extended.
+   - `ufp.formatter.basic.BasicSrcDstActionFormatter`
+     - Basic formatter used with the `-p` argument. Prints a table with date, protocol, src, dst, spt, dpt, and action.
+   - `ufp.formatter.count.CountFormatter`
+     - Displays count of filtered `ParsedLine` instances.
+   - `ufp.formatter.summary.SummaryFormatter`
+     - Displays summary information regarding sources, destinations, source ports, and destination ports.
+   - `ufp.formatter.summary.SrcToDstPortFormatter`
+     - Displays mapping of source IP addresses to destintion ports.
+   - `ufp.formatter.summary.DstToDstPortFormatter`
+     - Displays mapping of destination IP addresses to destintion ports.
+   - `ufp.formatter.summary.SrcToDstIPFormatter`
+     - Displays mapping of source IP addresses to destintion IP addresses.
+
+## Running tests
+```
+pytest
+```
