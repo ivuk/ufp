@@ -15,7 +15,7 @@ class Cli():
 
         arg_parser.add_argument('filename', metavar='filename',
                                 default='/var/log/ufw.log',
-                                type=str,
+                                type=str, nargs='?',
                                 help='Specify which ufw log file to '
                                 'parse. - for stdin. /var/log/ufw.log '
                                 'is default.')
