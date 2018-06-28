@@ -75,9 +75,9 @@ the count of matching entries (same as -p -ct).
 - Only show traffic inbound to the logging host which was blocked
   - ./ufp.py -i -b
 - Only show traffic outbound from the logging host which was blocked. Enable reverse DNS lookup for entries.
-  - ./ufp.py -i -b -r
+  - ./ufp.py -o -b -r
   
-  *Outbound entries will only appear if you have explicitly enabled that type of logging. For example: ufw allow out **log** to any proto tcp port 22*
+  *Outbound entries will only appear if you have explicitly enabled that type of logging. For example: `ufw allow out log to any proto tcp port 22`*
   
 ## UFP Python Package
  - `ufp.parser`
