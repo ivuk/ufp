@@ -33,7 +33,7 @@ optional arguments:
                         distinct sources and destination addresses for each
                         source.
   -ct, --count          Count entries after filtering and display the number.
-  -r, --reverse-dns     Enable reverse DNS lookupto translate IP addresses
+  -r, --reverse-dns     Enable reverse DNS lookup to translate IP addresses
                         into hostnames.
   -c, --colorize        Use colored icons in output to represent ALLOW or
                         BLOCK.
