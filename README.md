@@ -1,7 +1,7 @@
 ufp
 ===
 
-The Uncomplicated Firewall (ufw) log parser.
+The [Uncomplicated Firewall](https://help.ubuntu.com/community/UFW "UFW help") (ufw) log parser.
 ```
 Usage: ufp.py [-h] [-p] [-s] [-src2dpt] [-dst2dpt] [-src2dst] [-ct] [-r] [-c]
               [-a] [-b] [-i] [-o] [-spt FILTER_SOURCE_PORT]
