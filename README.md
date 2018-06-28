@@ -8,7 +8,7 @@ Usage: ufp.py [-h] [-p] [-s] [-src2dpt] [-dst2dpt] [-src2dst] [-ct] [-r] [-c]
               [-a] [-b] [-i] [-o] [-spt FILTER_SOURCE_PORT]
               [-dpt FILTER_DESTINATION_PORT] [-src FILTER_SOURCE_IP]
               [-dst FILTER_DESTINATION_IP]
-              filename
+              [filename]
 
 positional arguments:
   filename              Specify which ufw log file to parse. - for stdin.
