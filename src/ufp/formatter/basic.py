@@ -1,15 +1,6 @@
 from .base import BaseFormatter
 
 
-class BasicSrcDstFormatter(BaseFormatter):
-    """
-    Basic formatter which displays source and destination pairs.
-    """
-    def format(self):
-        for line in self.entries:
-            print(line.src, '\t', line.dst)
-
-
 class BasicSrcDstActionFormatter(BaseFormatter):
     """
     Basic formatter which displays source and destination pairs as
