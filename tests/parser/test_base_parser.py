@@ -21,6 +21,7 @@ def log_lines():
         "Aug  6 06:25:20 myhost kernel: [105600.181847] [UFW ALLOW] IN= OUT=eno1 SRC=123.45.67.89 DST=123.45.67.88 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=24678 DF PROTO=TCP SPT=37314 DPT=11211 WINDOW=29200 RES=0x00 SYN URGP=0",
         "Aug  6 06:25:21 myhost kernel: [105600.181923] [UFW ALLOW] IN=eno1 OUT= SRC=123.45.67.88 DST=123.45.67.89 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=24679 DF PROTO=TCP SPT=11211 DPT=37314 WINDOW=29200 RES=0x00 SYN URGP=0",
         "Aug  6 06:25:21 myhost kernel: [105600.181946] [UFW BLOCK] IN=eno1 OUT= SRC=123.45.67.88 DST=123.45.67.89 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=24680 DF PROTO=TCP SPT=11211 DPT=37314 WINDOW=29200 RES=0x00 SYN URGP=0",
+        "Aug  6 06:27:10 myhost kernel: [105709.694155] [UFW BLOCK] IN=eno1 OUT= MAC=01:00:5e:00:00:01:e8:de:27:25:a8:3e:08:00 SRC=192.168.0.1 DST=224.0.0.1 LEN=32 TOS=0x1C PREC=0xC0 TTL=1 ID=0 PROTO=2",
     ]
 
 @pytest.fixture
@@ -142,3 +143,45 @@ def test_filter_allow_only(parser_filter):
 
     for parsed_line in parser_filter:
         assert parsed_line.allowed() == True
+
+def test_filter_block_only(parser_filter):
+    parser_filter.filter_block_only = True
+
+    for parsed_line in parser_filter:
+        assert parsed_line.blocked() == True
+
+def test_filter_inbound_only(parser_filter):
+    parser_filter.filter_inbound_only = True
+
+    for parsed_line in parser_filter:
+        assert parsed_line.inbound() == True
+
+def test_filter_outbound_only(parser_filter):
+    parser_filter.filter_outbound_only = True
+
+    for parsed_line in parser_filter:
+        assert parsed_line.outbound() == True
+
+def test_filter_source_port(parser_filter):
+    parser_filter.filter_source_port = 37314
+
+    for parsed_line in parser_filter:
+        assert parsed_line.spt == 37314
+
+def test_filter_destination_port(parser_filter):
+    parser_filter.filter_destination_port = 11211
+
+    for parsed_line in parser_filter:
+        assert parsed_line.dpt == 11211
+
+def test_filter_source_ip(parser_filter):
+    parser_filter.filter_source_ip = '123.45.67.88'
+
+    for parsed_line in parser_filter:
+        assert parsed_line.src == '123.45.67.88'
+
+def test_filter_destination_ip(parser_filter):
+    parser_filter.filter_destination_ip = '224.0.0.1'
+
+    for parsed_line in parser_filter:
+        assert parsed_line.dst == '224.0.0.1'
