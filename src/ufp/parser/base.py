@@ -64,7 +64,7 @@ class ParsedLine():
             value = self.data[name]
         except KeyError:
             if name == "SPT" or name == "DPT":
-                return '-'
+                return 0
             return None
 
         if name == "SPT" or name == "DPT":
