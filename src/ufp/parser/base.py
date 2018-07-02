@@ -35,6 +35,8 @@ class ParsedLine():
             self.action = self.ACTION_ALLOW
         elif action == 'BLOCK':
             self.action = self.ACTION_BLOCK
+        elif action == 'AUDIT':
+            pass
         else:
             raise ValueError("action must be ALLOW or BLOCK")
 

@@ -18,6 +18,14 @@ WINDOW=29200 RES=0x00 SYN URGP=0"
 
 
 @pytest.fixture
+def log_audit_line():
+    return "Aug  6 06:25:20 myhost kernel: [105600.181847] [UFW AUDIT] \
+IN= OUT=eno1 SRC=123.45.67.89 DST=123.45.67.88 LEN=60 TOS=0x00 \
+PREC=0x00 TTL=64 ID=24678 DF PROTO=TCP SPT=37314 DPT=11211 \
+WINDOW=29200 RES=0x00 SYN URGP=0"
+
+
+@pytest.fixture
 def log_line_multicast():
     return "Aug  6 06:27:10 myhost kernel: [105709.694155] [UFW BLOCK] \
 IN=eno1 OUT= MAC=01:00:5e:00:00:01:e8:de:27:25:a8:3e:08:00 \
@@ -68,6 +76,12 @@ def test_parse_line_returns_parsed_line_with_date(parsed_line):
 
 def test_parse_line_returns_parsed_line_with_action(parsed_line):
     assert parsed_line.action == ParsedLine.ACTION_ALLOW
+
+
+def test_parse_line_returns_parsed_line_with_audit_action(log_audit_line):
+    parser = BaseParser()
+    parsed_line = parser.parse_line(log_audit_line)
+    assert parsed_line.action is None
 
 
 def test_parse_line_returns_parsed_line_with_empty_in(parsed_line):
